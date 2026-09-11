@@ -1,0 +1,22 @@
+# Compiled C objects / executables
+*.o
+*.obj
+*.out
+a.out
+
+# Executables built next to source by .vscode/tasks.json
+# 확장자 없는 ELF 실행 파일: 아래 규칙으로 Data-Structures 하위의
+# "이름에 . 이 없는 파일"(=빌드 산출물)만 무시하고, 소스/문서(.c, .md, .pdf)는 추적
+Data-Structures/**/*
+!Data-Structures/**/
+!Data-Structures/**/*.*
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# OS
+.DS_Store
+Thumbs.db
