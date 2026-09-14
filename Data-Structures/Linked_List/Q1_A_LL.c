@@ -211,30 +211,30 @@ int removeNode(LinkedList *ll, int index){
 	ListNode *pre, *cur;
 
 	// Highest index we can remove is size-1
-	if (ll == NULL || index < 0 || index >= ll->size)
-		return -1;
+	if (ll == NULL || index < 0 || index >= ll->size)	//ll이 가리키는 size값보다 index가 크거나 같을 경우
+		return -1;										// return -1반환
 
 	// If removing first node, need to update head pointer
-	if (index == 0){
-		cur = ll->head->next;
-		free(ll->head);
-		ll->head = cur;
-		ll->size--;
+	if (index == 0){									//index값이 0일경우
+		cur = ll->head->next;							//cur에 ll이 가리키는 head의 next. 즉, 두 번째 노드의 주소를 저장
+		free(ll->head);									// ll가 가리키는 head의 메모리 반납
+		ll->head = cur;									//ll을 가리키는 head에 cur를 대입
+		ll->size--;										// ll의 size에 1을 뺌
 
 		return 0;
 	}
 
 	// Find the nodes before and after the target position
 	// Free the target node and reconnect the links
-	if ((pre = findNode(ll, index - 1)) != NULL){
+	if ((pre = findNode(ll, index - 1)) != NULL){		//findNode로 index-1 노드를 찾아 pre에 저장. 그 결과가 NULL이 아닐 경우 조건문 실행
 
-		if (pre->next == NULL)
-			return -1;
+		if (pre->next == NULL)							//pre가 가리키는 next같이 NULL상태일 경우
+			return -1;									//-1을 반환
 
-		cur = pre->next;
-		pre->next = cur->next;
-		free(cur);
-		ll->size--;
+		cur = pre->next;								//cur는 pre가 가리키는 next
+		pre->next = cur->next;							//pre가 가리키는 next에 cur가 가리키는 next를 대입
+		free(cur);										//cur가 가리키는 메모리 반납
+		ll->size--;										//ll의 size에 1을 뺌
 		return 0;
 	}
 
