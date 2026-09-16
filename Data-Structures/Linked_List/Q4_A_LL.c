@@ -87,6 +87,59 @@ int main()
 void moveEvenItemsToBack(LinkedList *ll)
 {
 	/* add your code here */
+	//3. moveOddItemsToBack 방법을 써도 되겠으나 이번에는 다르게 시도해볼 예정
+	/* 다르게 시도한 이유는 시간복잡도가 3번은 O(n^2)가 나왔고, 예전 기수의 선배님이 O(n)으로 구현한 것을 보고 4번은 O(n)으로 할 수 있게 시도해봄
+	 절차과정은 다음과 같음
+	 1. 리스트 size 확인. 리스트의 맨 마지막 노드 주소를 확인해 마지막 노드까지 확인이 되면 검사는 종료됨
+	 2. 짝수 정의(3번 문제에서 홀수 정의한 방식과 동일)
+	 3. 짝수가 맞을 경우 리스트 맨 뒤로 이동시킴
+	 4. 노드 값이 홀수라면 지나감
+	 5. 최종 결과 반환
+	*/
+	
+	if (ll == NULL || ll->head == NULL)				//리스트가 비어있는 상태거나 리스트의 헤드가 비어있는 상태면 종료. 즉 더 이상 탐색이 할 게 없을 경우 종료하고 결과 반환
+		return;
+
+	//변수 선언
+
+	ListNode *last = findNode(ll, ll->size - 1);  // 원래 마지막 노드 — 종료 기준이자 tail의 시작값
+	ListNode *tail = last;							//마지막 노드
+	ListNode *prenode = NULL; 						//이전노드
+	ListNode *cur = ll->head;						//현재노드
+
+	//노드 탐색이 끝나기 전까지 계속 반복
+	while (cur != NULL)				//현재 노드가 NULL 상태가 아니라면
+	{
+		//노드를 탐색하기 전 준비해야할 것들
+		ListNode *next = cur->next;      // next변수에 현재 노드의 다음 노드를 저장. cur을 건드리기 전에 원래 다음 자리를 챙겨둠
+		int isLast = (cur == last);      // 정수형 isLast는 현재 노드 = 마지막. 이번이 원래 마지막 노드를 보는 차례인지
+
+		//짝수를 뒤로 옮기는 과정
+		if (cur->item % 2 == 0)          // 짝수일 경우 
+		{
+			if (cur != tail)              // 현재 노드가 tail에 위치하지 않을 경우. 이미 tail 자리면 옮길 필요 없음(자기 자신에게 붙는 걸 방지)
+			{
+				if (prenode == NULL)	//이전 노드가 비어있는 상태면
+					ll->head = next;	//리스트의 헤드는 다음으로 이동
+				else
+					prenode->next = next;	//이전 노드의 다음은 다음으로. 다음 노드로 이동시킴
+
+				tail->next = cur;		//tail의 next가 현재 노드
+				cur->next = NULL;		//현재 노드 다음이 비어있는 상태. 즉 더 셀 노드가 없다면
+				tail = cur;				//tail은 현재 노드
+			}
+			// prenode는 그대로 — 방금 빠진 자리에 새로 들어온 노드가 다음 번 "앞 노드" 후보
+		}
+		else                               // 홀수 → 그대로 둠
+		{
+			prenode = cur;		//prenode는 현재 노드. 홀수일 경우 넘어가기
+		}
+
+		if (isLast)
+			break;		//종료 선언
+
+		cur = next;		//현재 노드는 다음 노드로
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
