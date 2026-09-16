@@ -27,13 +27,13 @@ typedef struct _linkedlist
 //////////////////////// function prototypes /////////////////////////////////////
 
 // You should not change the prototype of this function
-void moveOddItemsToBack(LinkedList *ll);
+void moveOddItemsToBack(LinkedList *ll);		//홀수 노드를 뒤로
 
-void printList(LinkedList *ll);
-void removeAllItems(LinkedList *ll);
-ListNode * findNode(LinkedList *ll, int index);
-int insertNode(LinkedList *ll, int index, int value);
-int removeNode(LinkedList *ll, int index);
+void printList(LinkedList *ll);				//리스트출력
+void removeAllItems(LinkedList *ll);		//모든 아이템 제거
+ListNode * findNode(LinkedList *ll, int index);		//노드 찾기
+int insertNode(LinkedList *ll, int index, int value);		//노드 추가
+int removeNode(LinkedList *ll, int index);		//노드 제거
 
 //////////////////////////// main() //////////////////////////////////////////////
 
@@ -84,9 +84,38 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void moveOddItemsToBack(LinkedList *ll)
-{
+void moveOddItemsToBack(LinkedList *ll) //홀수 뒤로 옮기기
+{	
 	/* add your code here */
+
+	//1. 홀수 정의. 홀수는 item을 2로 나눌 때 나머지가 있을 경우 홀수
+	//2. 홀수인 노드는 리스트 우측에 이동
+	//3. 과정을 반복하다 처음 옮겼던 홀수를 만나면 반복문 종료.
+	//	 리스트의 원래 크기만큼 반복. 
+	//만약 홀수가 없을 경우 반복문을 실행하지 않고 종료
+	int pos = 0;
+	int checked = 0;
+	int value;
+	
+	while (checked < ll -> size)
+	{
+		value = findNode(ll, pos) -> item;
+		
+			if(value % 2 !=0)
+			{
+				insertNode(ll, ll -> size, value);
+				removeNode(ll, pos);
+			}
+			else
+			{
+				pos++;
+			}
+			
+			checked++;
+	}
+		
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
